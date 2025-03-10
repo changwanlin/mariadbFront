@@ -5,7 +5,7 @@
       <el-table-column prop="student_id" label="學生編號" />
       <el-table-column prop="seat_id" label="座位編號" />
       <el-table-column prop="timeslot_id" label="時段編號" />
-      <el-table-column prop="create_time" label="創建時間" />
+      <el-table-column prop="create_time" label="創建時間" :formatter="formatDate" />
     </el-table>
   </div>
 </template>
@@ -15,13 +15,27 @@ import { onMounted, ref } from 'vue';
 import type { Reservation } from './interfaces/Reservations';
 import { asyncGet } from './utils/fetch';
 import { apis } from './enum/api';
-const reservations = ref<Array<Reservation>>([])
+
+const reservations = ref<Array<Reservation>>([]);
+
+const formatDate = (_row: any, _column: any, cellValue: string) => {
+  if (!cellValue) return ''; // 避免空值錯誤
+  return new Date(cellValue).toLocaleString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false // 24小時制
+  });
+};
 
 onMounted(() => {
   asyncGet(apis.test).then((resp: Array<Reservation>) => {
-    reservations.value = resp
-  })
-})
+    reservations.value = resp;
+  });
+});
 </script>
 
 <style scoped lang="scss">
