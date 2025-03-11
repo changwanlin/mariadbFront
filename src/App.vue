@@ -19,7 +19,7 @@ import { apis } from './enum/api';
 const reservations = ref<Array<Reservation>>([]);
 
 const formatDate = (_row: any, _column: any, cellValue: string) => {
-  if (!cellValue) return ''; // 避免空值錯誤
+  if (!cellValue) return '';
   return new Date(cellValue).toLocaleString('zh-TW', {
     year: 'numeric',
     month: '2-digit',
@@ -27,7 +27,7 @@ const formatDate = (_row: any, _column: any, cellValue: string) => {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    hour12: false // 24小時制
+    hour12: false
   });
 };
 
